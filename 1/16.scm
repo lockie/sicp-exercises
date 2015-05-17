@@ -11,7 +11,7 @@
 
 (define (fast-expt-iter b n a cntr)
   (cond ((= cntr n) a)
-        (else (cond ((even? n) (square (fast-expt-iter b (/ n 2) a cntr)))
+        (else (cond ((even? n) (fast-expt-iter (square b) (/ n 2) a cntr))
                     (else (fast-expt-iter b n (* a b) (+ cntr 1)))
               )
         )
