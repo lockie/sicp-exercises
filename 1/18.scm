@@ -18,16 +18,16 @@
 )
 
 (define (fast-mult a b)
-  (fast-mult-iter a b 0))
+  (fast-mult-iter a b 0 0))
 
-(define (fast-mult-iter a b cntr)
+(define (fast-mult-iter a b acc cntr)
   (if (= cntr b)
-    0
+    acc
     (if (= b 0)
         0
         (if (even? b)
-            (double (fast-mult-iter a (halve b) cntr))
-            (+ a (fast-mult-iter a b (+ cntr 1)))
+            (fast-mult-iter (double a) (halve b) acc cntr)
+            (fast-mult-iter a b (+ acc a) (+ cntr 1))
         )
     )
   )
