@@ -7,19 +7,19 @@
 (define (even? n)
   (= (remainder n 2) 0))
 
-(define (mult a b)
+(define (mult a b acc)
   (if (= b 0)
-    0
+    acc
     (if (even? b)
-      (double (mult a (halve b)))
-      (+ a (mult a (- b 1)))
+      (mult (double a) (halve b) acc)
+      (mult a (- b 1) (+ acc a))
     )
   )
 )
 
 
-(mult 0 2)
+(mult 0 2 0)
 
-(mult 5 8)
+(mult 5 8 0)
 
-(mult 1000 1001)
+(mult 1000 1001 0)
