@@ -1,4 +1,4 @@
-#lang planet neil/sicp
+#lang sicp
 
 (define (pascal-triangle row col)
   (cond ((= row 1) 1)

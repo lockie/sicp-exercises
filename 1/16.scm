@@ -1,4 +1,4 @@
-#lang planet neil/sicp
+#lang sicp
 
 (define (fast-expt b n)
   (fast-expt-iter b n 1 0))

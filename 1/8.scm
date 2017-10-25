@@ -1,4 +1,4 @@
-#lang planet neil/sicp
+#lang sicp
 
 (define (cbrt-iter guess x)
   (if (good-enough? guess x)

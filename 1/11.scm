@@ -1,4 +1,4 @@
-#lang planet neil/sicp
+#lang sicp
 
 (define (f n)
   (cond ((< n 3) n)

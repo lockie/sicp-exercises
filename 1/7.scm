@@ -1,4 +1,4 @@
-#lang planet neil/sicp
+#lang sicp
 
 (define (sqrt-iter guess x)
   (define new-guess (improve guess x))
