@@ -1,7 +1,7 @@
 #lang sicp
 
 
-;; а
+;; a
 
 (define (and? exp) (tagged-list? exp 'and))
 (define (eval-and exp env)
@@ -18,5 +18,16 @@
                           (else (eval-or (cdr exp) env)))))))
 
 
-;; б
-;; через make-if
+;; b
+
+(define (and->if exp)
+    (cond ((null? exp) 1)
+          (else (make-if (car exp)
+                         (and->if (cdr exp))
+                         0))))
+
+(define (or->if exp)
+    (cond ((null? exp) 0)
+          (else (make-if (car exp)
+                         1
+                         (or->if (cdr exp))))))
