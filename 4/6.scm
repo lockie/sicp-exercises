@@ -6,6 +6,6 @@
 (define (make-lambda args body) (list 'lambda args body))
 
 (define (let->combination exp)
-    (let ((vars (car exp)))
-        (cons (make-lambda (map car vars) (cadr exp))
-              (map cadr vars))))
+    (let ((vars (cadr exp)))
+        (append (list (make-lambda (map car vars) (cddr exp)))
+                (map cadr vars))))
