@@ -408,6 +408,8 @@
 
 '(REGISTER SIMULATOR LOADED)
 
+(#%provide make-machine set-register-contents! get-register-contents start)
+
 ;; boilerplate
 ;; (define machine-name
 ;;     (make-machine
