@@ -73,6 +73,13 @@
       (cadddr exp)
       'false))
 
+(define (let? exp) (tagged-list? exp 'let))
+
+(define (let->combination exp)
+    (let ((vars (cadr exp)))
+        (append (list (make-lambda (map car vars) (cddr exp)))
+                (map cadr vars))))
+
 
 (define (begin? exp) (tagged-list? exp 'begin))
 (define (begin-actions exp) (cdr exp))
@@ -143,6 +150,7 @@
         ((definition? exp)
          (compile-definition exp target linkage))
         ((if? exp) (compile-if exp target linkage))
+        ((let? exp) (compile (let->combination exp) target linkage))
         ((lambda? exp) (compile-lambda exp target linkage))
         ((begin? exp)
          (compile-sequence (begin-actions exp)
