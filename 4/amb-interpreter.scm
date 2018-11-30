@@ -358,6 +358,7 @@
         ((begin? exp) (analyze-sequence (begin-actions exp)))
         ((cond? exp) (analyze (cond->if exp)))
         ((let? exp) (analyze (let->combination exp))) ;**
+        ((let*? exp) (analyze (let*->nested-lets exp)))
         ((amb? exp) (analyze-amb exp))                ;**
         ((application? exp) (analyze-application exp))
         (else
@@ -553,6 +554,7 @@
 ;;; Support for Let (as noted in footnote 56, p.428)
 
 (define (let? exp) (tagged-list? exp 'let))
+(define (let*? exp) (tagged-list? exp 'let*))
 (define (let-bindings exp) (cadr exp))
 (define (let-body exp) (cddr exp))
 
@@ -567,6 +569,17 @@
     (make-combination (make-lambda (map let-var bindings)
                                    (let-body exp))
                       (map let-val bindings))))
+
+(define (let*->nested-lets exp)
+    (let* ((body (let-body exp))
+           (bindings (let-bindings exp))
+           (rest-bindings (cdr bindings)))
+        (list 'let
+              (list (car bindings))
+              (cond ((null? rest-bindings)
+                     body)
+                    (else
+                     (let*->nested-lets (list 'let rest-bindings body)))))))
 
 ;; A longer list of primitives -- suitable for running everything in 4.3
 ;; Overrides the list in ch4-mceval.scm
@@ -595,6 +608,7 @@
         (list 'sqrt sqrt)
         (list 'eq? eq?)
         (list 'prime? prime?)
+        (list 'map map)
 ;;      more primitives
         ))
 
